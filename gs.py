@@ -4,7 +4,7 @@ def proj(u,v):
 	return (np.dot(u,v)/np.dot(u,u)) * u
 
 def angleVec3(v1, v2):
-	ang = np.math.acos(np.dot(v1,v2)/(np.linalg.norm(v1)*np.linalg.norm(v2)))
+	ang = np.math.acos(np.clip(np.dot(v1,v2)/(np.linalg.norm(v1)*np.linalg.norm(v2)),-1,1))
 	return ang
 
 def checkOrtho3(u1, u2, u3, tol=1e-3):
