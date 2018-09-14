@@ -110,22 +110,33 @@ def scheme_2s_1s_linPlan(N, N_lowlow, bvalues, bvalues_lowlow, filenameout, disp
 	# scalling2tmp = np.concatenate((scalling[0]*np.ones(dirs_low.shape[0]),scalling[0]*np.ones(dirs_low.shape[0]),scalling[1]*np.ones(dirs_high.shape[0]),scalling[1]*np.ones(dirs_high.shape[0])),axis=0)
 
 
-	interleave_every = int(np.floor((2*np.sum(N)-1)/float(N_lowlow[0])))
+	interleave_every = int(np.floor((2*np.sum(N))/float(N_lowlow[0])))
 	print('{} quasi-B0 to interleave in {} dirs :: 1 every {}'.format(N_lowlow[0], 2*np.sum(N), interleave_every))
 
 	g1 = np.zeros((g1tmp.shape[0]+N_lowlow[0],3))
 	scalling1 = np.zeros((scalling1tmp.shape[0]+N_lowlow[0]))
 	g2 = np.zeros((g2tmp.shape[0]+N_lowlow[0],3))
 	# scalling2 = np.zeros((scalling2tmp.shape[0]+N_lowlow[0]))
+
+	## No b0 first
+	# for i in range(N_lowlow[0]):
+	# 	g1[i*interleave_every+i:(i+1)*interleave_every+i] = g1tmp[i*interleave_every:(i+1)*interleave_every]
+	# 	scalling1[i*interleave_every+i:(i+1)*interleave_every+i] = scalling1tmp[i*interleave_every:(i+1)*interleave_every]
+	# 	g1[(i+1)*interleave_every+i] = dirs_lowlow[i]
+	# 	scalling1[(i+1)*interleave_every+i] = scalling[2]
+	# 	g2[i*interleave_every+i:(i+1)*interleave_every+i] = g2tmp[i*interleave_every:(i+1)*interleave_every]
+	# 	# scalling2[i*interleave_every+i:(i+1)*interleave_every+i] = scalling2tmp[i*interleave_every:(i+1)*interleave_every]
+	# 	g2[(i+1)*interleave_every+i] = dirs_lowlow[i]
+	# 	# scalling2[(i+1)*interleave_every+i] = scalling[2]
+
+	# with b0 first
 	for i in range(N_lowlow[0]):
-		g1[i*interleave_every+i:(i+1)*interleave_every+i] = g1tmp[i*interleave_every:(i+1)*interleave_every]
-		scalling1[i*interleave_every+i:(i+1)*interleave_every+i] = scalling1tmp[i*interleave_every:(i+1)*interleave_every]
-		g1[(i+1)*interleave_every+i] = dirs_lowlow[i]
-		scalling1[(i+1)*interleave_every+i] = scalling[2]
-		g2[i*interleave_every+i:(i+1)*interleave_every+i] = g2tmp[i*interleave_every:(i+1)*interleave_every]
-		# scalling2[i*interleave_every+i:(i+1)*interleave_every+i] = scalling2tmp[i*interleave_every:(i+1)*interleave_every]
-		g2[(i+1)*interleave_every+i] = dirs_lowlow[i]
-		# scalling2[(i+1)*interleave_every+i] = scalling[2]
+		g1[i*interleave_every+i] = dirs_lowlow[i]
+		scalling1[i*interleave_every+i] = scalling[2]
+		g1[i*interleave_every+i+1:(i+1)*interleave_every+i+1] = g1tmp[i*interleave_every:(i+1)*interleave_every]
+		scalling1[i*interleave_every+i+1:(i+1)*interleave_every+i+1] = scalling1tmp[i*interleave_every:(i+1)*interleave_every]
+		g2[i*interleave_every+i] = dirs_lowlow[i]
+		g2[i*interleave_every+i+1:(i+1)*interleave_every+i+1] = g2tmp[i*interleave_every:(i+1)*interleave_every]
 	g1[(i+1)*interleave_every+i+1:] = g1tmp[(i+1)*interleave_every:]
 	g2[(i+1)*interleave_every+i+1:] = g2tmp[(i+1)*interleave_every:]
 	scalling1[(i+1)*interleave_every+i+1:] = scalling1tmp[(i+1)*interleave_every:]
