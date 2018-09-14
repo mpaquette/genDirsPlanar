@@ -30,6 +30,8 @@ res = np.array(res)
 plotScatter3(pts, mirror=False, title='u1')
 plotScatter3(res, mirror=False, title='u23')
 plotScatter3(res, mirror=True, title='u23 mir')
+odf, pts = sphericalHist(res, np.round(N/5))
+displaySphericalHist(odf, pts)
 
 # Orthogonality test with random orientation
 N = 100
@@ -58,3 +60,6 @@ res = np.array(res)
 plotScatter3(pts, mirror=False, title='u1')
 plotScatter3(res, mirror=False, title='u23')
 plotScatter3(res, mirror=True, title='u23 mir')
+odf, pts = sphericalHist(res, np.round(N/5))
+displaySphericalHist(odf, pts)
+
