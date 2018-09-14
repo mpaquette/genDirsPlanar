@@ -10,7 +10,7 @@ def savingLinPlan(g1,g2,scale,filename):
 	g2 = g2*scale[:, None]
 	g3 = np.zeros_like(g1)
 	grad = np.concatenate((g1,g2,g3), axis=1)
-	np.savetxt(filename, grad)
+	np.savetxt(filename, grad, '%.4e')
 
 
 def scheme_2s_1s_linPlan(N, N_lowlow, bvalues, bvalues_lowlow, filenameout, display=False):
